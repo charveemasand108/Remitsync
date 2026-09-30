@@ -22,3 +22,29 @@ DIAGNOSE
 RECOVER
     ↓
 RECONCILE
+                    REMITSYNC
+                        │
+        ┌───────────────┼────────────────┐
+        │               │                │
+        ▼               ▼                ▼
+   PAYMENT LAYER   INTELLIGENCE      LEDGER LAYER
+        │               │                │
+        │               │                │
+   ISO 20022      AI Diagnosis       Drunix
+   Routing        Monitoring         Consensus
+   Settlement     Liquidity          Validation
+        │          Analysis          Commitment
+        │               │                │
+        └───────────────┼────────────────┘
+                        │
+                        ▼
+              RECOVERY ORCHESTRATION
+                        │
+                        ▼
+               ALTERNATIVE RAIL
+                        │
+                        ▼
+             THREE-WAY RECONCILIATION
+                        │
+                        ▼
+                 VERIFIED STATE
