@@ -47,10 +47,10 @@
 19. [Project Structure](#-project-structure)
 20. [Getting Started](#-getting-started)
 21. [Environment Variables](#-environment-variables)
-22. [Deployment](#-deployment)
+22. 
 23. [Current Status & Roadmap](#-current-status--roadmap)
-24. [Contributing](#-contributing)
-25. [License](#-license)
+
+
 
 ---
 
