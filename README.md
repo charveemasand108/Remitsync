@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌐 REMITSYNC
+# 🌐 REMITSYNC - 
 
 ### Cross-Border Settlement Reliability · Intelligent Recovery · Autonomous Reconciliation
 
