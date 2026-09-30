@@ -47,8 +47,7 @@
 19. [Project Structure](#-project-structure)
 20. [Getting Started](#-getting-started)
 21. [Environment Variables](#-environment-variables)
-22. 
-23. [Current Status & Roadmap](#-current-status--roadmap)
+22. [Current Status & Roadmap](#-current-status--roadmap)
 
 
 
