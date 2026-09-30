@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── User (synced from Clerk) ────────────────────────────────────────
+
+model User {
+  id        String   @id // Clerk user ID
+  email     String   @unique
+  name      String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  ownedProjects  Project[]        @relation("ProjectOwner")
+  memberships    ProjectMember[]
+  assignedTasks  Task[]           @relation("TaskAssignee")
+  createdTasks   Task[]           @relation("TaskCreator")
+  comments       Comment[]
+}
+
+// ─── Project ─────────────────────────────────────────────────────────
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Owner
+  ownerId String
+  owner   User   @relation("ProjectOwner", fields: [ownerId], references: [id])
+
+  // Relations
+  members ProjectMember[]
+  tasks   Task[]
+
+  @@index([ownerId])
+}
+
+// ─── Project Membership ──────────────────────────────────────────────
+
+enum ProjectRole {
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+model ProjectMember {
+  id        String      @id @default(cuid())
+  role      ProjectRole @default(MEMBER)
+  createdAt DateTime    @default(now())
+
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@index([projectId])
+}
+
+// ─── Task ────────────────────────────────────────────────────────────
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model Task {
+  id          String       @id @default(cuid())
+  title       String
+  description String?
+  status      TaskStatus   @default(TODO)
+  priority    TaskPriority @default(MEDIUM)
+  dueDate     DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  projectId  String
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  assigneeId String?
+  assignee   User?   @relation("TaskAssignee", fields: [assigneeId], references: [id])
+
+  creatorId  String
+  creator    User    @relation("TaskCreator", fields: [creatorId], references: [id])
+
+  comments   Comment[]
+
+  @@index([projectId])
+  @@index([assigneeId])
+  @@index([status])
+}
+
+// ─── Comment ─────────────────────────────────────────────────────────
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  taskId String
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  @@index([taskId])
+}

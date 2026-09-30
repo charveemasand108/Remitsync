@@ -1,0 +1,15 @@
+{
+  "name": "project-management-system",
+  "version": "1.0.0",
+  "description": "A comprehensive project management system",
+  "private": true,
+  "scripts": {
+    "dev": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "preview": "cd client && npm run preview",
+    "lint": "cd client && npm run lint"
+  },
+  "dependencies": {
+    "@clerk/react": "^6.1.2"
+  }
+}
